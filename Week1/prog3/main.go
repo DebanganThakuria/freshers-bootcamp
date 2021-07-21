@@ -4,50 +4,46 @@ import (
 	"fmt"
 )
 
-type employee interface {
-	calculateSalary() int
+type empSalCalc interface {
+	calculateSalary(a, b int) int
+}
+
+type emp struct{}
+
+func (c emp) calculateSalary(a, b int) int {
+	return a * b
 }
 
 type Fulltime struct {
-	id int
-	days int
+	id    int
+	days  int
 	basic int
-}
-
-func (ft *Fulltime) calculateSalary() int {
-	return ft.basic * ft.days
+	emp
 }
 
 type Contractor struct {
-	id int
-	days int
+	id    int
+	days  int
 	basic int
-}
-
-func (ct *Contractor) calculateSalary() int {
-	return ct.basic * ct.days
+	emp
 }
 
 type Freelancer struct {
-	id int
+	id    int
 	hours int
 	basic int
-}
-
-func (fl *Freelancer) calculateSalary() int {
-	return fl.basic * fl.hours
+	emp
 }
 
 func main() {
-	var em employee
+	var esc empSalCalc
 
-	em = &Fulltime{1, 28, 500}
-	fmt.Println(em.calculateSalary())
+	esc = Fulltime{1, 28, 500, emp{}}
+	fmt.Println(esc.calculateSalary(esc.(Fulltime).days, esc.(Fulltime).basic))
 
-	em = &Contractor{2, 28, 100}
-	fmt.Println(em.calculateSalary())
+	esc = Contractor{2, 28, 100, emp{}}
+	fmt.Println(esc.calculateSalary(esc.(Contractor).days, esc.(Contractor).basic))
 
-	em = &Freelancer{3, 45, 10}
-	fmt.Println(em.calculateSalary())
-
+	esc = Freelancer{3, 45, 10, emp{}}
+	fmt.Println(esc.calculateSalary(esc.(Freelancer).hours, esc.(Freelancer).basic))
 }
