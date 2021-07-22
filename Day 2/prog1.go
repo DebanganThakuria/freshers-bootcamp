@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sync"
 )
 
 func main() {
@@ -13,34 +12,28 @@ func main() {
 	char := make(chan byte)
 	done := make(chan bool)
 
-	var wg sync.WaitGroup
+	totalChars := 0
 
 	for i := 0; i < len(strings); i++ {
-		wg.Add(1)
 		s := strings[i]
+		totalChars += len(s)
 		go func() {
 			for j := 0; j < len(s); j++ {
 				char <- s[j]
 			}
-			wg.Done()
 		}()
 	}
 
 	freq := make(map[byte]int)
 
 	go func() {
-		for {
-			select {
-				case <- done:
-					break
-				case key := <- char:
-					freq[key] += 1
-			}
+		for i := 0; i < totalChars; i++ {
+			freq[<-char] += 1
 		}
+		done <- true
 	}()
 
-	wg.Wait()
-	done <- true
+	<- done
 
 	for key, val := range freq {
 		fmt.Printf("%c : %v\n", key, val)
