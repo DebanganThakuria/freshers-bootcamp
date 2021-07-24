@@ -6,16 +6,16 @@ import (
 )
 
 type Matrix struct{
-	Rows int `json:"Rows"`
-	Columns int `json:"Columns"`
-	Data [][]int `json:"Matrix"`
+	Rows int `json:"rows"`
+	Columns int `json:"columns"`
+	Data [][]int `json:"data"`
 }
 
-func (m *Matrix) getRows() int {
+func (m *Matrix) GetRows() int {
 	return m.Rows
 }
 
-func (m *Matrix) getColumns() int {
+func (m *Matrix) GetColumns() int {
 	return m.Columns
 }
 
@@ -31,7 +31,7 @@ func (m *Matrix) Add(x Matrix) {
 	}
 }
 
-func (m *Matrix) jsonDump() {
+func (m *Matrix) JsonDump() {
 	b, err := json.MarshalIndent(m, "", " ")
 
 	if err != nil {
@@ -56,11 +56,11 @@ func main() {
 		[][]int{{1, 1, 1}, {1, 1, 1}, {1, 1, 1}},
 	}
 
-	fmt.Println(m1.getRows())
-	fmt.Println(m1.getColumns())
+	fmt.Println(m1.GetRows())
+	fmt.Println(m1.GetColumns())
 	m1.Update(0, 0, 10)
 	fmt.Println(m1.Data)
 	m1.Add(m2)
 	fmt.Println(m1.Data)
-	m1.jsonDump()
+	m1.JsonDump()
 }

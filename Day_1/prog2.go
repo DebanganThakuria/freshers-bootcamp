@@ -39,13 +39,13 @@ func postorder(root *tree) {
 	}
 }
 
-func main() {
-	var expression = "a+b-c"
-	var root *tree
-
-	root = buildTree(expression)
-
-	preorder(root)
-	fmt.Println("\n")
-	postorder(root)
-}
+//func main() {
+//	var expression = "a+b-c"
+//	var root *tree
+//
+//	root = buildTree(expression)
+//
+//	preorder(root)
+//	fmt.Println("\n")
+//	postorder(root)
+//}
