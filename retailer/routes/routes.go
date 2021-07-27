@@ -34,6 +34,7 @@ func Setup(name string) *gin.Engine {
 	{
 		group3.POST("/", api.CreateCustomer)
 		group3.GET("/", api.GetCustomers)
+		group3.GET("/order/:id", api.CustomerHistory)
 	}
 
 	return r
